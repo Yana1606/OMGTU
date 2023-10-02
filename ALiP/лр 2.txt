@@ -1,0 +1,172 @@
+1)using System;
+
+class HelloWorld
+{
+
+  static void Main ()
+  {
+
+    int k;
+
+      k = Convert.ToInt32 (Console.ReadLine ());
+
+    int x = 0, y = 0, n = 0, count = 0;
+
+    for (int a = 0; a < k; a++)
+      {
+
+	int N = Convert.ToInt32 (Console.ReadLine ());
+
+
+	if (a == 1)
+	  {
+
+	    y = N;
+
+	  }
+
+	else if (a > 1)
+	  {
+
+	    n = N;
+
+	  }
+
+	else if (a == 0)
+	  {
+
+	    x = N;
+
+	  }
+
+	if (y < x && y < n)
+	  {
+
+	    count++;
+
+	  }
+
+	x = y;
+
+	y = n;
+
+      }
+
+    Console.WriteLine (count);
+
+  }
+
+}
+
+
+
+2)using System;
+class HelloWorld
+{
+  static void Main ()
+  {
+    int number = Convert.ToInt32 (Console.ReadLine ());
+    int x = Convert.ToInt32 (Console.ReadLine ());
+      number -= 1;
+    int count = 0;
+    for (int i = 0; i < number; i++)
+      {
+	int y = Convert.ToInt32 (Console.ReadLine ());
+	if (x * y < 0)
+	    count += 1;
+	  x = y;
+      }
+    Console.WriteLine (count);
+  }
+}
+
+
+
+3)using System;
+
+class HelloWorld
+{
+  
+static void Main ()
+  {
+    
+int k = Convert.ToInt32 (Console.ReadLine ());
+    
+int maxlen = 0, number = 0, maxlength = 0;
+
+for (int c = 0; c < k; c++)
+      {
+	
+int num = Convert.ToInt32 (Console.ReadLine ());
+	
+if (c == 0)
+	  {
+	    
+number = num;
+	  
+}
+	
+if (number == num)
+	  {
+	    
+maxlength++;
+	  
+}
+	
+else
+	  {
+	    
+if (maxlength > maxlen)
+	      {
+		
+maxlen = maxlength;
+	      
+}
+	    
+maxlength = 0;
+	  
+}
+	
+	number = num;
+      
+}
+    
+Console.WriteLine (maxlen);
+  
+}
+
+}
+
+
+
+4)using System;
+class HelloWorld {
+    static void Main(){
+        int k = Convert.ToInt32(Console.ReadLine());
+        int minlen = 10000, len = 0;
+        for (int i = 0; i < k; i++)
+        {
+            int number = Convert.ToInt32(Console.ReadLine());
+            if (number < 0)
+            {
+                len++;
+            }
+            else if (len > 0)
+            {
+                if (len < minlen)
+                {
+                    minlen = len;
+                }
+                len = 0;
+            }
+            if (i == k - 1 && len > 0)
+            {
+                if (len < minlen)
+                {
+                    minlen = len;
+                }
+            }
+        }
+        Console.WriteLine(minlen);
+    }
+}
