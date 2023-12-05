@@ -1,0 +1,79 @@
+using System;
+    class Student
+{
+    public static void FindStudentByYear(Student student, string year)
+    {
+        if (student._year == year)
+        {
+            Console.WriteLine($"ФИО: {student.FIO}, Группа: {student.Group}, Год: {student.Year}");
+        }
+    }
+    public static void FindStudentByGroup(Student student, string group)
+    {
+        if (student._group == group)
+        {
+            Console.WriteLine($"ФИО: {student.FIO}, Группа: {student.Group}, Год: {student.Year}");
+        }
+    }
+    string _fio, _group, _year;
+ 
+    public Student(string fio, string group, string year)
+    {
+        this._fio = fio;
+        this._group = group;
+        this._year = year;
+    }
+
+   
+    public string FIO
+    {
+        set { this._fio = value; }
+        get { return this._fio; }
+    }
+    public string Group
+    {
+        set { this._group = value; }
+        get { return this._group; }
+    }
+    public string Year
+    {
+        set { this._year = value; }
+        get { return this._year; }
+    }
+
+}
+
+class Program
+{
+    static void Main()
+    {
+        Student[] students = new Student[4];
+        students[0] = new Student("ФИО1", "FIT-231", "2004");
+        students[1] = new Student("ФИО2", "FIT-232", "2005");
+        students[2] = new Student("ФИО3", "FIT-231", "2005");
+        students[3] = new Student("ФИО4", "MO-231", "2006");
+        Console.WriteLine("Введите тип поиска ('god' для фильтра по году рождения студента, 'group' для фильтра по группе студента)");
+
+        string poisk = Console.ReadLine();
+
+        if (poisk == "god")
+        {
+            Console.Write("Введите год рождения студента: ");
+            string studentYear = Console.ReadLine();
+            foreach (Student student in students)
+            {
+                Student.FindStudentByYear(student, studentYear);
+            }
+        }
+        else if (poisk == "group")
+        {
+            Console.Write("Введите группу студента: ");
+            string studentGroup = Console.ReadLine();
+
+            foreach (Student student in students)
+            {
+                Student.FindStudentByGroup(student, studentGroup);
+            }
+        }
+    }
+}
