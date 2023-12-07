@@ -1,0 +1,198 @@
+1)using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите количество элементов: ");
+        int n = int.Parse(Console.ReadLine());
+        int[] array = new int[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Введите элемент {i+1}: ");
+            array[i] = int.Parse(Console.ReadLine());
+        }
+
+        int max = array[0];
+        int min = array[0];
+        int maxIndex = 0;
+        int minIndex = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (array[i] > max)
+            {
+                max = array[i];
+                maxIndex = i;
+            }
+            if (array[i] < min)
+            {
+                min = array[i];
+                minIndex = i;
+            }
+        }
+
+        int count = 0;
+        int start = Math.Min(maxIndex, minIndex);
+        int end = Math.Max(maxIndex, minIndex);
+        for (int i = start + 1; i < end; i++)
+        {
+            if (array[i] % 2 == 0)
+            {
+                count++;
+            }
+        }
+
+        Console.WriteLine("Количество чётных элементов между максимумом и минимумом: " + count);
+    }
+}
+
+2)using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество элементов:");
+        int n = Convert.ToInt32(Console.ReadLine());
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine("Введите элемент {0}:", i + 1);
+            arr[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        bool allEvenElementsContainFive = true;
+        for (int i = 1; i < n; i += 2)
+        {
+            if (Convert.ToString(arr[i]).Contains("5"))
+            {
+                allEvenElementsContainFive = false;
+                break;
+            }
+        }
+        if (allEvenElementsContainFive)
+        {
+            Console.WriteLine("Все элементы, стоящие на своих местах имеют в своей записи цифру '5'.");
+        }
+        else
+        {
+            Console.WriteLine("Не все элементы, стоящие на своих местах имеют в своей записи цифру '5'.");
+        }
+    }
+}
+
+3)using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите количество элементов: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write("Введите элемент " + (i + 1) + ": ");
+            arr[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i] % 2 != 0)
+            {
+                int sum = 0;
+                int num = arr[i];
+                while (num != 0)
+                {
+                    sum += num % 10;
+                    num /= 10;
+                }
+                arr[i] = sum;
+            }
+        }
+        Console.WriteLine("Окончательный массив: ");
+        foreach (int element in arr)
+        {
+            Console.Write(element + " ");
+        }
+    }
+}
+
+4)using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество элементов:");
+        int n = int.Parse(Console.ReadLine());
+        int[] array = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine("Введите элемент" + (i + 1) + ":");
+            array[i] = int.Parse(Console.ReadLine());
+        }
+        int sum = 0;
+        int count = 0;
+        int elementsGreaterThanAverage = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (array[i] % 2 != 0)
+            {
+                sum += array[i];
+                count++;
+            }
+        }
+        
+        if (count > 0)
+        {
+            double average = (double)sum / count;
+            for (int i = 0; i < n; i++)
+            {
+                if (array[i] > average)
+                {
+                    elementsGreaterThanAverage++;
+                }
+            }
+        }
+        
+        Console.WriteLine("Количество элементов, которые больше ср. арифметического нечетных элементов: " + elementsGreaterThanAverage);
+    }
+}
+
+5)using System;
+
+class Program
+{
+    static bool HasNegativeEndingWith3(int[] arr)
+    {
+        foreach (int num in arr)
+        {
+            if (num < 0 && num.ToString()[num.ToString().Length - 1] == '3')
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static void Main()
+    {
+        Console.WriteLine("Введите количество элементов:");
+        int n = Convert.ToInt32(Console.ReadLine());
+        int[] elements = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine("Введите элемент " + (i + 1) + ":");
+            elements[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        if (HasNegativeEndingWith3(elements))
+        {
+            Console.WriteLine("В массиве есть хотя бы один отрицательный элемента с 3 на конце");
+        }
+        else
+        {
+            Console.WriteLine("В массиве нет ни одного отрицательного элемента с 3 на конце");
+        }
+    }
+}
