@@ -1,0 +1,231 @@
+1)using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("Введите элементы массива: ");
+        if (!int.TryParse(Console.ReadLine(), out int n) || n < 1)
+        {
+            Console.WriteLine("Введите положительное целое чмсло");
+            return;
+        }
+
+        bool allMultiples = true;
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine($"Enter element {i + 1}: ");
+            if (!int.TryParse(Console.ReadLine(), out int element))
+            {
+                Console.WriteLine("Введите целое число");
+                return;
+            }
+            if (element % (i + 1) != 0)
+            {
+                allMultiples = false;
+                break;
+            }
+        }
+
+        if (allMultiples)
+        {
+            Console.WriteLine("Все элементы кратны своему номеру");
+        }
+        else
+        {
+            Console.WriteLine("Не все элементы кратны своему номеру");
+        }
+    }
+}
+
+2)using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество элементов в массиве ");
+        int n = Convert.ToInt32(Console.ReadLine());
+        int[] array = new int[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine("Ввести элемент " + (i+1) + ":");
+            array[i] = Convert.ToInt32(Console.ReadLine());
+        }
+
+        int position = -1;
+        for (int i = 0; i < n; i++)
+        {
+            if (array[i] % 2 == 0)
+            {
+                position = i+1;
+                break;
+            }
+        }
+
+        if (position != -1)
+        {
+            Console.WriteLine("Номер первого четного элемента в массиве: " + position);
+        }
+        else
+        {
+            Console.WriteLine("Нет четных элементов в массиве");
+        }
+    }
+}
+
+
+3)using System;
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество элементов");
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        int[] array = new int[n];
+        
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine("Ввести элемент" + (i+1) + ":");
+            array[i] = Convert.ToInt32(Console.ReadLine());
+        }
+
+        int position = -1; 
+        for (int i = n - 1; i >= 0; i--) 
+        {
+            if (array[i] == 0)
+            {
+                position = i+1; 
+                break; 
+            }
+        }
+        
+        if (position != -1)
+        {
+            Console.WriteLine("Позиция последнего нулевого элемента " + position);
+        }
+        else
+        {
+            Console.WriteLine("В массиве нет нулевых элементов");
+        }
+    }
+}
+
+4)using System;
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите количество элементов");
+        int n = Convert.ToInt32(Console.ReadLine());
+        int[] arr = new int[n];
+        int min = Int32.MaxValue;
+        int count = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine("Ввести элемент" + (i+1) + ":");
+            arr[i] = Convert.ToInt32(Console.ReadLine());
+            if (arr[i] < min)
+            {
+                min = arr[i];
+            }
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            if (min != 0 && arr[i] % min == 0)
+            {
+                count++;
+            }
+        }
+        Console.WriteLine("Количество элементов, кратных минимальному " + count);
+
+    }
+}
+
+5)using System;
+class HelloWorld { 
+  static void Main()
+        {
+            int k = Convert.ToInt32(Console.ReadLine());
+            int[] arr = new int[k];
+            int minimum = 0, maximum = 0, elementuwan = 0, elementnul = 0;
+            bool ubivanie = true;
+
+            for (int i = 0; i < k; i++)
+            {
+                int input = Convert.ToInt32((Console.ReadLine()));
+                arr[i] = input;
+
+                if (i == 0)
+                {
+                    minimum = input;
+                }
+                if (i == 1 && input <= minimum)
+                {
+                    maximum = minimum;
+                    minimum = input;
+                }
+                if (i == 1 && input > minimum)
+                {
+                    maximum = input;
+                }
+                if (i > 1 && input >= maximum)
+                {
+                    maximum = input;
+                }
+                if (i > 1 && input <= minimum)
+                {
+                    minimum = input;
+                }
+            }
+            for (int i = 0; i < k; i++)
+            {
+                if (elementuwan == 0)
+                {
+                    elementuwan = arr[i];
+                    continue;
+                }
+                if (elementuwan != 0 && elementnul == 0)
+                {
+                    elementnul = elementuwan;
+                    elementuwan = arr[i];
+                    continue;
+                }
+                if ((elementuwan == minimum && elementnul == maximum) || (elementuwan == maximum && elementnul == minimum))
+                {
+                    ubivanie = false;
+                    break;
+                }
+                if (elementuwan >= elementnul)
+                {
+                    continue;
+                }
+
+                if (arr[i] > minimum && arr[i] < maximum)
+                {                 
+                    if(elementuwan >= elementnul)
+                    {
+                        ubivanie = false;
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            if (ubivanie == false)
+            {
+                Console.WriteLine("Убывающей последовательности нет.");
+            }
+            else
+            {
+                Console.WriteLine("Убывающая последовательность есть.");
+            }
+        }
+
+    }
