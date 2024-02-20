@@ -1,0 +1,33 @@
+import math
+
+
+def GetMin(edge, connectedVertices):
+    EdgeMin = (math.inf, -1, -1)
+    for vertice in connectedVertices:
+        currentRib = min(edge, key=lambda x: x[0] if (x[1] == vertice or x[2] == vertice) and (x[1] not in connectedVertices or x[2] not in connectedVertices) else math.inf)
+        if EdgeMin[0] > currentRib[0]:
+            EdgeMin = currentRib
+
+    return EdgeMin
+
+edges = [(math.inf, -1, -1), (15, 1, 2), (14, 1, 5), (23, 1, 4), (19, 2, 3), (16, 2, 4), (15, 2, 5),
+         (14, 3, 5), (26, 3, 6), (25, 4, 5), (23, 4, 7), (20, 4, 8), (24, 5, 6),
+         (27, 5, 8), (18, 5, 9), (14, 7, 8), (18, 8, 9)]
+
+k = 0
+for edge in edges:
+    k = max(k, edge[1], edge[2])
+
+ConnectedVertices = {1}
+ostov = []
+
+while len(ConnectedVertices) < k:
+    edge = GetMin(edges, ConnectedVertices)
+    if edge[0] == math.inf:
+        break
+
+    ostov.append(edge)
+    ConnectedVertices.add(edge[1])
+    ConnectedVertices.add(edge[2])
+
+print(ostov)
