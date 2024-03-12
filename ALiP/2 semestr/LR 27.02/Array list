@@ -16,12 +16,12 @@ namespace ConsoleApplication18
             Console.WriteLine("1. Количество элементов");
             Console.WriteLine("2. Бинарный поиск");
             Console.WriteLine("3. Копирование");
-            Console.WriteLine("4. IndexOf");
-            Console.WriteLine("5. Insert");
-            Console.WriteLine("6. Reverse");
-            Console.WriteLine("7. Sort");
-            Console.WriteLine("8. Add");
-            Console.WriteLine("0. Exit");
+            Console.WriteLine("4. Поиск по индексу");
+            Console.WriteLine("5. Внедрение элемента");
+            Console.WriteLine("6. Перевертыш");
+            Console.WriteLine("7. Сортировка");
+            Console.WriteLine("8. Добавление");
+            Console.WriteLine("0. Выход");
             string choice = Console.ReadLine();
             switch (choice)
             {
