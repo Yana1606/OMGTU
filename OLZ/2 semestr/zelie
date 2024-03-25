@@ -1,0 +1,36 @@
+k = 10
+with open(f'input{k}.txt') as file:
+    lines = file.read().splitlines()
+
+actions = {
+    'MIX': 'MX',
+    'WATER': 'WT',
+    'DUST': 'DT',
+    'FIRE': 'FR'
+}
+
+ingredients = [line.split() for line in lines]
+
+magic_a = []
+for line in ingredients:
+    action, *line_ingredients = line
+    spell_parts = []
+    for ingredient in line_ingredients:
+        if ingredient.isdigit():
+            spell_parts.append(actions['MIX'][int(ingredient) - 1])
+        else:
+            spell_parts.append(ingredient)
+    spell = ''.join(spell_parts)
+    magic_a.append(actions[action] + spell + actions[action][::-1])
+
+result = magic_a[-1]
+print(result)
+
+with open(f'output{k}.txt') as file:
+    output = file.read().strip()
+
+print(output)
+if result == output:
+    print('Same!')
+else:
+    print('Not same!')
