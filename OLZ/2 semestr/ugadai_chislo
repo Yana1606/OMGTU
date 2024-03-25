@@ -1,0 +1,41 @@
+# Иницилизация переменных и считывание входных данных из файла
+k = 1
+with open(f'input_s1_0{k}.txt') as file:
+    lines = file.read().splitlines()
+result = int(lines[-1])
+lines = lines[1:-1]
+
+# Анализ операции и чисел из входных данных
+operations = []
+x_operations = [('+', 1)]
+
+for line in lines:
+    operation, number = line.split()
+    if number == 'x':
+        x_operations.append((operation, 1))
+    else:
+        operations.append((operation, int(number)))
+
+# Выполнение операции с числами
+for op, num in operations:
+    if op in ['+', '-']:
+        for entry in x_operations:
+            entry = (entry[0], entry[1] * int(num)) if entry[1] != 1 else entry
+
+# Вычисление результата
+total_sum = result
+for op, num in operations:
+    if op == '+':
+        total_sum -= num
+    else:
+        total_sum += num
+
+total_sum_x = 0
+for op, num in x_operations:
+    if op == '+':
+        total_sum_x += num
+    else:
+        total_sum_x -= num
+
+# Вывод финального результата
+print(int(total_sum / total_sum_x))
