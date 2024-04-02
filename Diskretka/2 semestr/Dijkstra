@@ -1,0 +1,67 @@
+matrix = [
+    [0, 7, 0, 0, 9, 2, 0, 0, 0, 0, 0, 0],
+
+    [7, 0, 5, 4, 8, 2, 0, 0, 0, 0, 0, 0],
+
+    [0, 5, 0, 2, 9, 0, 0, 0, 0, 0, 0, 0],
+
+    [0, 4, 2, 0, 3, 0, 8, 3, 0, 0, 0, 0],
+
+    [9, 8, 9, 3, 0, 3, 5, 1, 7, 0, 0, 0],
+
+    [2, 2, 0, 0, 3, 0, 0, 6, 1, 0, 0, 0],
+
+    [0, 0, 0, 8, 5, 0, 0, 6, 0, 4, 4, 0],
+
+    [0, 0, 0, 3, 1, 6, 6, 0, 2, 7, 8, 5],
+
+    [0, 0, 0, 0, 7, 1, 0, 2, 0, 0, 6, 1],
+
+    [0, 0, 0, 0, 0, 0, 4, 7, 0, 0, 10, 0],
+
+    [0, 0, 0, 0, 0, 0, 4, 8, 6, 10, 0, 3],
+
+    [0, 0, 0, 0, 0, 0, 0, 5, 1, 0, 3, 0]
+]
+
+
+def d(matrix, a, b):
+    dist = [float('inf')] * len(matrix)
+    dist[a] = 0
+    visited = [False] * len(matrix)
+    path = [-1] * len(matrix)
+
+    for _ in range(len(matrix)):
+        mindist = float('inf')
+        minindex = -1
+        for i in range(len(matrix)):
+            if not visited[i] and dist[i] < mindist:
+                mindist = dist[i]
+                minindex = i
+
+        if minindex == -1:
+            break
+
+        visited[minindex] = True
+
+        for i in range(len(matrix)):
+            if not visited[i] and matrix[minindex][i] > 0:
+                new_distance = dist[minindex] + matrix[minindex][i]
+                if new_distance < dist[i]:
+                    dist[i] = new_distance
+                    path[i] = minindex
+
+    shortest_path = []
+    curr = b
+    while curr != -1:
+        shortest_path.insert(0, curr + 1)
+        curr = path[curr]
+
+    return dist[b], shortest_path
+
+
+start_vertex = int(input("Start vertex: ")) - 1
+end_vertex = int(input("End vertex: ")) - 1
+
+answ = d(matrix, start_vertex, end_vertex)
+print("Shortest distance and shortest path:", answ)
