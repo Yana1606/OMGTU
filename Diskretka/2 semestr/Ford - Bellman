@@ -1,0 +1,49 @@
+def f_b(graph, a, b):
+    dist = [float('inf')] * len(graph)
+    parent = [-1] * len(graph)
+    dist[a] = 0
+
+    for _ in range(len(graph) - 1):
+        for u in range(len(graph)):
+            for v in range(len(graph)):
+                if graph[u][v] != 0 and dist[u] + graph[u][v] < dist[v]:
+                    dist[v] = dist[u] + graph[u][v]
+                    parent[v] = u
+
+    for u in range(len(graph)):
+        for v in range(len(graph)):
+            if graph[u][v] != 0 and dist[u] + graph[u][v] < dist[v]:
+                print("Graph contains negative cycle")
+                return
+
+    path = []
+    curr = b
+    while curr != -1:
+        path.insert(0, curr + 1)
+        curr = parent[curr]
+
+    return dist[b], path
+
+#Граф с отрицательным циклом
+# weight_matrix = [
+#     [0, 4, 4, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 4, -2, 0, 0],
+#     [3, 0, 2, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 1, 0, 0, -2, 0],
+#     [0, 3, 0, 0, -3, 0, 0, 0],
+#     [0, 0, 0, 0, 0, 2, 0, 2],
+#     [0, 0, 0, 0, -2, 0, 0, 0]
+# ]
+
+weight_matrix = [
+    [0, 1, 0, 0, 3],
+    [0, 0, 8, 7, 1],
+    [0, 0, 0, 1, -5],
+    [0, 0, 2, 0, 0],
+    [0, 0, 0, 4, 0]
+]
+start_vertex = int(input("Start vertex: ")) - 1
+end_vertex = int(input("End vertex: ")) - 1
+answ = f_b(weight_matrix, start_vertex, end_vertex)
+print("Shortest distance and shortest path:", answ)
