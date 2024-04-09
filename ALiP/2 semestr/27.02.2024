@@ -1,0 +1,85 @@
+using System; 
+using System.Collections.Generic; 
+ 
+class Program 
+{ 
+ static void Main(string[] args) 
+ { 
+ var calls = new List<(string, DateTime, int)> 
+ { 
+     ("123456789", new DateTime(2024, 4, 1), 10), 
+     ("987654321", new DateTime(2024, 4, 1), 15), 
+     ("123456789", new DateTime(2024, 4, 2), 20), 
+     ("987654321", new DateTime(2024, 4, 2), 25), 
+     ("123456789", new DateTime(2024, 4, 2), 30) 
+ }; 
+ 
+ Console.WriteLine("Task 1"); 
+ Dictionary<string, int> monthlyReportDictionary = new Dictionary<string, int>(); 
+ Dictionary<string, int> monthlyReportHashTable = new Dictionary<string, int>(); 
+ 
+ foreach (var call in calls) 
+ { 
+     string phoneNumber = call.Item1; 
+     int minutes = call.Item3; 
+ 
+     if (monthlyReportDictionary.ContainsKey(phoneNumber)) {
+     monthlyReportDictionary[phoneNumber] += minutes;
+     }
+     else{ 
+     monthlyReportDictionary[phoneNumber] = minutes; 
+     }
+     string key = phoneNumber + call.Item2.Month; 
+     if (monthlyReportHashTable.ContainsKey(key)) {
+     monthlyReportHashTable[key] += minutes; 
+     }
+     else{ 
+     monthlyReportHashTable[key] = minutes;
+     }
+     } 
+ 
+ Console.WriteLine("Monthly Report (Dictionary):"); 
+ foreach (var entry in monthlyReportDictionary) 
+ { 
+     Console.WriteLine($"Phone Number: {entry.Key}, Total Minutes: {entry.Value}"); 
+ } 
+ 
+ Console.WriteLine("\nMonthly Report (Hash Table with Duplicates):"); 
+ foreach (var entry in monthlyReportHashTable) 
+ { 
+     Console.WriteLine($"Key: {entry.Key}, Total Minutes: {entry.Value}"); 
+ } 
+ 
+ Console.WriteLine("\nTask 2"); 
+ Dictionary<DateTime, int> dailyReportDictionary = new Dictionary<DateTime, int>(); 
+ Dictionary<DateTime, int> dailyReportHashTable = new Dictionary<DateTime, int>(); 
+ 
+ foreach (var call in calls) 
+ { 
+     DateTime date = call.Item2; 
+     int minutes = call.Item3; 
+ 
+     if (dailyReportDictionary.ContainsKey(date)) 
+     dailyReportDictionary[date] += minutes; 
+     else 
+     dailyReportDictionary[date] = minutes; 
+ 
+     if (dailyReportHashTable.ContainsKey(date)) 
+     dailyReportHashTable[date] += minutes; 
+     else 
+     dailyReportHashTable[date] = minutes; 
+ } 
+ 
+ Console.WriteLine("Daily Report (Dictionary):"); 
+ foreach (var entry in dailyReportDictionary) 
+ { 
+     Console.WriteLine($"Date: {entry.Key.ToShortDateString()}, Total Minutes: {entry.Value}"); 
+ } 
+ 
+ Console.WriteLine("\nDaily Report (Hash Table):"); 
+ foreach (var entry in dailyReportHashTable) 
+ { 
+    Console.WriteLine($"Date: {entry.Key.ToShortDateString()}, Total Minutes: {entry.Value}"); 
+ } 
+ } 
+}
