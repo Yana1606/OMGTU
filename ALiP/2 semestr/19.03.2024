@@ -1,0 +1,85 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Program
+{
+    class Operations
+    {
+        public delegate double UnaryOperation(double num1);
+        public delegate double BinaryOperation(double num1, double num2);
+
+        static double FindUnaryOperation(UnaryOperation operation)
+        {
+            Console.Write("Введите число: ");
+            double num1 = Convert.ToDouble(Console.ReadLine());
+            return operation(num1);
+        }
+        static double FindBinaryOperation(BinaryOperation operation)
+        {
+            Console.Write("Введите первый операнд: ");
+            double num1 = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите второй операнд: ");
+            double num2 = Convert.ToDouble(Console.ReadLine());
+            
+            return operation(num1, num2);
+        }
+        static double Division(double num1, double num2)
+        {
+            if (num2 == 0)
+            {
+                throw new ArgumentException("Деление на ноль!!");
+            }
+            return num1 / num2;
+        }
+        static double FindSqrt(double num1)
+        {
+            if (num1 < 0)
+            {
+                throw new ArgumentException("Неверный ввод!");
+            }
+            return Math.Sqrt(num1);
+        }
+        
+        static void Main(string[] args)
+        {
+        Console.WriteLine("Какую операцию выполнить? \n1. Сложение \n2. Вычитание \n3. Умножение \n4. Деление \n5. Корень \n6. Синус \n7. Косинус");
+        Console.Write("Ваш выбор: ");
+        string answ = Console.ReadLine();
+        double result = 0;
+
+        switch (answ)
+        {
+            case "1":
+                result = FindBinaryOperation((double num1, double num2) => num1 + num2);
+                break;
+            case "2":
+                result = FindBinaryOperation((double num1, double num2) => num1 - num2);
+                break;
+            case "3":
+                result = FindBinaryOperation((double num1, double num2) => num1 * num2);
+                break;
+            case "4":
+                result = FindBinaryOperation((double num1, double num2) => Division(num1, num2));
+                break;
+            case "5":
+                result = FindUnaryOperation(FindSqrt);
+                break;
+            case "6":
+                result = FindUnaryOperation(Math.Sin);
+                break;
+            case "7":
+                result = FindUnaryOperation(Math.Cos);
+                break;
+            default:
+                Console.WriteLine("Неверный ввод!");
+                break;
+        }
+        Console.WriteLine($"Результат: {result}");
+        Console.ReadKey();
+        }
+    }
+}
+//Вместе с Шумковой
