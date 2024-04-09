@@ -1,0 +1,44 @@
+def floyd(matrix, a, b):
+    dist = [row[:] for row in matrix]
+    next_vertex = [[i for i in range(len(matrix))] for _ in range(len(matrix))]
+
+    for k in range(len(matrix)):
+        for l in range(len(matrix)):
+            for m in range(len(matrix)):
+                if dist[l][m] > dist[l][k] + dist[k][m]:
+                    dist[l][m] = dist[l][k] + dist[k][m]
+                    next_vertex[l][m] = next_vertex[k][m]
+
+    path = [a]
+    while a != b:
+        a = next_vertex[a][b]
+        path.append(a)
+
+    s = " -> ".join([str(vertex + 1) for vertex in path])
+    return dist[path[0]][path[-1]], s
+
+
+weight_matrix = [
+    [0, 7, float('inf'), float('inf'), 9, 2, float('inf'), float('inf'), float('inf'), float('inf'), float('inf'),
+     float('inf')],
+    [7, 0, 5, 4, 8, 2, float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), float('inf')],
+    [float('inf'), 5, 0, 2, 9, float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), float('inf'),
+     float('inf')],
+    [float('inf'), 4, 2, 0, 3, float('inf'), 8, 3, float('inf'), float('inf'), float('inf'), float('inf')],
+    [9, 8, 9, 3, 0, 3, 5, 1, 7, float('inf'), float('inf'), float('inf')],
+    [2, 2, float('inf'), float('inf'), 3, 0, float('inf'), 6, 1, float('inf'), float('inf'), float('inf')],
+    [float('inf'), float('inf'), float('inf'), 8, 5, float('inf'), 0, 6, float('inf'), 4, 4, float('inf')],
+    [float('inf'), float('inf'), float('inf'), 3, 1, 6, 6, 0, 2, 7, 8, 5],
+    [float('inf'), float('inf'), float('inf'), float('inf'), 7, 1, float('inf'), 2, 0, float('inf'), 6, 1],
+    [float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), 4, 7, float('inf'), 0, 10,
+     float('inf')],
+    [float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), 4, 8, 6, 10, float('inf'), 3],
+    [float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), float('inf'), 5, 1,
+     float('inf'), 3, 0]
+]
+
+start_vertex = int(input("Исходная вершина: ")) - 1
+end_vertex = int(input("Конечная вершина: ")) - 1
+dist, shortest_path = floyd(weight_matrix, start_vertex, end_vertex)
+print("Кратчайшее расстояние:", dist)
+print("Минимальный путь:", shortest_path)
