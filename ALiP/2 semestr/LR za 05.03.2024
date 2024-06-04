@@ -2,67 +2,66 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CallLogAnalyzer
+class CallInfo
 {
-    class Program
-    {
-            class CallRecord
-    {
-        public string CallerNumber { get; }
-        public string ReceiverNumber { get; }
-        public DateTime CallDate { get; }
-        public int CallDuration { get; }
+    public string CallingNumber { get; set; }
+    public string CalledNumber { get; set; }
+    public DateTime CallDate { get; set; }
+    public int CallDuration { get; set; }
 
-        public CallRecord(string callerNumber, string receiverNumber, DateTime callDate, int callDuration)
-        {
-            CallerNumber = callerNumber;
-            ReceiverNumber = receiverNumber;
-            CallDate = callDate;
-            CallDuration = callDuration;
-        }
+    public CallInfo(string callingNumber, string calledNumber, DateTime callDate, int callDuration)
+    {
+        CallingNumber = callingNumber;
+        CalledNumber = calledNumber;
+        CallDate = callDate;
+        CallDuration = callDuration;
     }
-    
-        static void Main(string[] args)
+}
+
+class PhoneCalls
+{
+
+    public static void Main(string[] args)
+    {
+        List<CallInfo> callRecords = new List<CallInfo>
         {
-            var callLog = new List<CallRecord>
-            {
-                new CallRecord("1234567890", "9876543210", new DateTime(2024, 4, 10), 15),
-                new CallRecord("1234567890", "5555555555", new DateTime(2024, 4, 10), 20),
-                new CallRecord("1234567890", "9876543210", new DateTime(2024, 4, 11), 10),
-               
-            };
+            new CallInfo ( "+1234567890", "+9876543210", new DateTime(2024, 5, 26), 5 ),
+            new CallInfo ( "+1234567890", "+1223334445", new DateTime(2024, 5, 26), 10 ),
+            new CallInfo ( "+1234567890", "+1111111111", new DateTime(2024, 5, 27), 20 ),
+            new CallInfo ( "+1234567890", "+9876543210", new DateTime(2024, 5, 27), 3 ),
+            new CallInfo ( "+1234567890", "+1223334445", new DateTime(2024, 5, 28), 30 ),
+            new CallInfo ( "+1234567890", "+9876543210", new DateTime(2024, 5, 28), 2 ),
+            new CallInfo ( "+1234567890", "+9876543210", new DateTime(2024, 5, 28), 15 ),
+        };
 
-           
-             Console.WriteLine("Enter the subscriber's number:");
-            string selectedNumber = Console.ReadLine();
+        string callerNumber = "+1234567890";
 
-           
-            var mostFrequentCalledNumbers = callLog
-                .Where(record => record.CallerNumber == selectedNumber)
-                .GroupBy(record => record.ReceiverNumber)
-                .OrderByDescending(group => group.Count())
-                .ToList();
+        var mostFrequentCalls = callRecords
+            .Where(record => record.CallingNumber == callerNumber)
+            .GroupBy(record => new { record.CallDate, record.CalledNumber })
+            .OrderByDescending(group => group.Count())
+            .Select(group => new
+            {
+                Date = group.Key.CallDate,
+                Number = group.Key.CalledNumber,
+                Count = group.Count()
+            })
+            .FirstOrDefault();
 
-            if (mostFrequentCalledNumbers.Any())
-            {
-                var mostFrequentNumber = mostFrequentCalledNumbers.First().Key;
-                Console.WriteLine($"Task 1 (true)\nThe most frequent subscriber {selectedNumber} called the number: {mostFrequentNumber}");
-            }
-            else
-            {
-                Console.WriteLine($"Task 1 (false)\nRecords for the subscriber {selectedNumber} not found.");
-            }
-        
-        
-          
-            var totalMinutesPerNumber = callLog
-                .GroupBy(record => record.CallerNumber)
-                .ToDictionary(group => group.Key, group => group.Sum(record => record.CallDuration));
+        Console.WriteLine($"Caller {callerNumber} most often called number {mostFrequentCalls.Number} {mostFrequentCalls.Date.ToShortDateString()} ({mostFrequentCalls.Count} times)");
 
-            foreach (var kvp in totalMinutesPerNumber.OrderByDescending(kvp => kvp.Value))
+        var longestCalls = callRecords
+            .Where(record => record.CallingNumber == callerNumber)
+            .GroupBy(record => new { record.CallDate, record.CalledNumber })
+            .Select(group => new
             {
-                Console.WriteLine($"Task 2\nNumber: {kvp.Key}, Total talk time: {kvp.Value} minutes");
-            }
-        }
+                Date = group.Key.CallDate,
+                Number = group.Key.CalledNumber,
+                TotalDuration = group.Sum(record => record.CallDuration)
+            })
+            .OrderByDescending(group => group.TotalDuration).ToList();
+
+        Console.WriteLine("\nNumbers with the most call minutes:");
+        longestCalls.ForEach(call =>  Console.WriteLine(($"Date: {call.Date.ToShortDateString()}, Number: {call.Number}, Duration: {call.TotalDuration} minutes")));
     }
 }
