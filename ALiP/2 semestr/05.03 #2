@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Call
+{
+    public string CallersNumber {get; set;}
+    public string RecipientsNumber {get; set;}
+    public DateTime CallDate {get; set;}
+    public int DurationMinutes {get; set;}
+}
+
+class Program
+{
+    static void Main()
+    {
+        List<Call> calls = new List<Call>
+        {
+            new Call {CallersNumber = "794-829", RecipientsNumber = "172-7863", CallDate = new DateTime(2024, 1, 1), DurationMinutes = 17},
+            new Call {CallersNumber = "794-829", RecipientsNumber = "757-9357", CallDate = new DateTime(2024, 1, 1), DurationMinutes = 19},
+            new Call {CallersNumber = "794-829", RecipientsNumber = "889-2768", CallDate = new DateTime(2024, 1, 2), DurationMinutes = 28},
+            new Call {CallersNumber = "794-829", RecipientsNumber = "889-2768", CallDate = new DateTime(2024, 1, 2), DurationMinutes = 28},
+            new Call {CallersNumber = "794-829", RecipientsNumber = "725-2782", CallDate = new DateTime(2024, 1, 2), DurationMinutes = 29},
+            new Call {CallersNumber = "794-829", RecipientsNumber = "725-2782", CallDate = new DateTime(2024, 1, 2), DurationMinutes = 30}
+        };
+        
+        string selectedCallersNumber = "794-829";
+        
+        var MaxNumberOfConversations = calls.Where(call => call.CallersNumber == selectedCallersNumber)
+                                .GroupBy(call => new {call.CallDate, call.RecipientsNumber})
+                                .Select(inf => new
+                                {
+                                    CallDate = inf.Key.CallDate,
+                                    RecipientsNumber = inf.Key.RecipientsNumber,
+                                    TotalDuration = inf.Sum(call => call.DurationMinutes)
+                                })
+                                .OrderByDescending(inf => inf.TotalDuration)
+                                .GroupBy(inf => inf.CallDate)
+                                .Select(inf => new
+                                {
+                                    CallDate = inf.Key,
+                                    TopRecipient = inf.FirstOrDefault()
+                                });
+        foreach (var data in MaxNumberOfConversations)
+        {
+            Console.WriteLine($"Date: {data.CallDate}, Caller {selectedCallersNumber} talked the most with number {data.TopRecipient.RecipientsNumber}, duration in minutes: {data.TopRecipient.TotalDuration}");
+        }
+    }
+}
